@@ -1,9 +1,9 @@
 
 from neo4j import GraphDatabase
 
-uri = "neo4j+s://8230265d.databases.neo4j.io"
+uri = "neo4j+s://5eb94846.databases.neo4j.io"
 username = "neo4j"
-password = "13tZDG6oNb2kJOKNLUYdP-3P0mAHEX4O9ylU0cQ5m5o"
+password = "8UdvbHSyr8kGH177lyiixQ7bZZvo8-HU5isM5cdGIEY"
 
 
 def create_node(label, attributes):
@@ -99,43 +99,38 @@ class Conexion:
 conexion = Conexion(uri, username, password)
 
 # Populacion del grafo
-conexion.exec_query_node('User', {'name': 'Diego', 'userId': '1'})
-conexion.exec_query_node('User', {'name': 'Brian', 'userId': '2'})
-conexion.exec_query_node('User', {'name': 'Luis', 'userId': '3'})
-conexion.exec_query_node('User', {'name': 'Jorge', 'userId': '4'})
-conexion.exec_query_node('User', {'name': 'Javier', 'userId': '5'})
 
-conexion.exec_query_node('Movie', {'title': 'Pulp Fiction', 'movieId': 1, 'year': 1994,
-                         'plot': 'The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.'})
-conexion.exec_query_node('Movie', {'title': 'The Matrix', 'movieId': 2, 'year': 1999,
-                         'plot': 'A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.'})
-conexion.exec_query_node('Movie', {'title': 'Inception', 'movieId': 3, 'year': 2010,
-                         'plot': 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.'})
-conexion.exec_query_node('Movie', {'title': 'Interstellar', 'movieId': 4, 'year': 2014,
-                         'plot': 'A team of explorers travel through a wormhole in space in an attempt to ensure humanity\'s survival.'})
-conexion.exec_query_node('Movie', {'title': 'The Shawshank Redemption', 'movieId': 5, 'year': 1994,
-                         'plot': 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.'})
+# Crear nodos de personas (Actores, Directores y Usuarios)
+conexion.exec_query_node('Person', {'name': 'Actor 1', 'tmdbId': 1, 'born': '1990-01-01', 'died': None,
+                                    'bornin': 'USA', 'url': 'http://example.com', 'imdbId': 123, 'bio': 'Actor bio', 'poster': 'actor1.jpg'})
 
-conexion.exec_create_relationship('User', {'userId': '1'}, 'Movie', {
-                                  'movieId': 1}, 'RATED', {'rating': 10, 'timestamp': 1617638223})
-conexion.exec_create_relationship('User', {'userId': '1'}, 'Movie', {
-                                  'movieId': 2}, 'RATED', {'rating': 5, 'timestamp': 1917638223})
-conexion.exec_create_relationship('User', {'userId': '2'}, 'Movie', {
-                                  'movieId': 2}, 'RATED', {'rating': 8, 'timestamp': 1912038221})
-conexion.exec_create_relationship('User', {'userId': '2'}, 'Movie', {
-                                  'movieId': 3}, 'RATED', {'rating': 4, 'timestamp': 5912038225})
-conexion.exec_create_relationship('User', {'userId': '3'}, 'Movie', {
-                                  'movieId': 1}, 'RATED', {'rating': 9, 'timestamp': 5112238287})
-conexion.exec_create_relationship('User', {'userId': '3'}, 'Movie', {
-                                  'movieId': 4}, 'RATED', {'rating': 7, 'timestamp': 9102231287})
-conexion.exec_create_relationship('User', {'userId': '4'}, 'Movie', {
-                                  'movieId': 4}, 'RATED', {'rating': 6, 'timestamp': 1102321237})
-conexion.exec_create_relationship('User', {'userId': '4'}, 'Movie', {
-                                  'movieId': 2}, 'RATED', {'rating': 4, 'timestamp': 7702901231})
-conexion.exec_create_relationship('User', {'userId': '5'}, 'Movie', {
-                                  'movieId': 1}, 'RATED', {'rating': 3, 'timestamp': 1722302233})
-conexion.exec_create_relationship('User', {'userId': '5'}, 'Movie', {
-                                  'movieId': 3}, 'RATED', {'rating': 7, 'timestamp': 9234455213})
+conexion.exec_query_node('Person', {'name': 'Actor 2', 'tmdbId': 2, 'born': '1985-03-15', 'died': '2020-05-20',
+                                    'bornin': 'UK', 'url': 'http://example.com', 'imdbId': 456, 'bio': 'Actor bio', 'poster': 'actor2.jpg'})
+conexion.exec_query_node('Person', {'name': 'Director 1', 'tmdbId': 3, 'born': '1975-11-20', 'died': None,
+                                    'bornin': 'France', 'url': 'http://example.com', 'imdbId': 789, 'bio': 'Director bio', 'poster': 'director1.jpg'})
+conexion.exec_query_node('User', {'name': 'User 1', 'userId': 1})
 
-conexion.find_user_movie_rating('1', 1)
+# Crear nodos de películas
+conexion.exec_query_node('Movie', {'title': 'Movie 1', 'tmdbId': 101, 'bom': '2000-01-01', 'year': 2000, 'imdbId': 111, 'runtime': 120, 'countries': [
+    'USA', 'UK'], 'imdbVotes': 1000, 'url': 'http://example.com', 'revenue': 1000000, 'plot': 'Movie plot', 'poster': 'movie1.jpg', 'budget': 500000, 'languages': ['English']})
+conexion.exec_query_node('Movie', {'title': 'Movie 2', 'tmdbId': 102, 'bom': '2005-05-05', 'year': 2005, 'imdbId': 222, 'runtime': 150, 'countries': [
+    'USA'], 'imdbVotes': 1500, 'url': 'http://example.com', 'revenue': 2000000, 'plot': 'Movie plot', 'poster': 'movie2.jpg', 'budget': 800000, 'languages': ['English', 'French']})
+
+# Crear relaciones de actuación
+conexion.exec_create_relationship('Person', {'tmdbId': 1}, 'Movie', {
+    'tmdbId': 101}, 'ACTED_IN', {'role': 'Main actor'})
+conexion.exec_create_relationship('Person', {'tmdbId': 2}, 'Movie', {
+    'tmdbId': 101}, 'ACTED_IN', {'role': 'Supporting actor'})
+
+# Crear relaciones de dirección
+conexion.exec_create_relationship('Person', {'tmdbId': 3}, 'Movie', {
+    'tmdbId': 101}, 'DIRECTED', None)
+
+# Crear relaciones de calificación
+conexion.exec_create_relationship('User', {'userId': 1}, 'Movie', {
+    'tmdbId': 101}, 'RATED', {'rating': 4, 'timestamp': 1617638223})
+conexion.exec_create_relationship('User', {'userId': 1}, 'Movie', {
+    'tmdbId': 102}, 'RATED', {'rating': 5, 'timestamp': 1917638223})
+
+
 conexion.close()
