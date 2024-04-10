@@ -132,5 +132,13 @@ conexion.exec_create_relationship('User', {'userId': 1}, 'Movie', {
 conexion.exec_create_relationship('User', {'userId': 1}, 'Movie', {
     'tmdbId': 102}, 'RATED', {'rating': 5, 'timestamp': 1917638223})
 
+# Crear nodos de género
+conexion.exec_query_node('Genre', {'name': 'Drama'})
+conexion.exec_query_node('Genre', {'name': 'Comedy'})
 
+# Crear relaciones entre películas y géneros
+conexion.exec_create_relationship('Movie', {'tmdbId': 101}, 'Genre', {
+                                  'name': 'Drama'}, 'IN_GENRE', None)
+conexion.exec_create_relationship('Movie', {'tmdbId': 102}, 'Genre', {
+                                  'name': 'Comedy'}, 'IN_GENRE', None)
 conexion.close()
